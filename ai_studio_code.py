@@ -6,7 +6,8 @@ import os
 # 1. Setup and API Configuration
 # Note: Using the specific model name and API key provided in the requirements
 API_KEY = "AQ.Ab8RN6IpqRKjfpIMs03OzZeTf-ze6xWsgoSTEzw7Y3znd2CCjw"
-MODEL_ID = "gemini-2.5-flash" 
+MODEL_ID = "gemini-1.5-flash"
+
 
 # Initialize the Gemini Client
 client = genai.Client(api_key=API_KEY)
