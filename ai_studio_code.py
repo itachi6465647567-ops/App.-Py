@@ -1,89 +1,61 @@
 import streamlit as st
-import feedparser
+import urllib.parse
 
 # Page Configuration
-st.set_page_config(page_title="Ultimate Gaming & Tech Hub", page_icon="🎮", layout="wide")
+st.set_page_config(page_title="Universal Software Link Generator", page_icon="⚡", layout="wide")
 
-st.title("🚀 Gaming, Tech & Study Portal")
-st.write("Welcome! Get the best PC optimization tips, trending news, and study guides all in one place.")
+st.title("⚡ Universal Software & ISO Link Generator")
+st.write("உங்களுக்குத் தேவையான சாஃப்ட்வேர் அல்லது Windows ISO பெயரைக் கீழே டைப் செய்யுங்கள். ஆட்டோமேட்டிக்காக டவுன்லோட் லிங்க்குகள் உருவாக்கப்படும்!")
 
-# Sidebar for Navigation
-st.sidebar.title("📌 Menu")
-choice = st.sidebar.radio("Go to:", ["🎮 PC Gaming & Optimization Tips", "🔥 Live Trending Gaming News", "📚 9th & 10th Study Formulas"])
+st.markdown("---")
 
-# 1. GAMING & OPTIMIZATION
-if choice == "🎮 PC Gaming & Optimization Tips":
-    st.header("🎮 Low-End PC Gaming & Optimization Guide")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("🔥 Free Fire Lag Fix (2GB / 4GB RAM)")
-        st.write("""
-        * **Graphics Setting:** Always set Display to **Smooth** and High FPS to **Normal**.
-        * **Clear Cache:** Open Free Fire Settings -> Others -> Clear Cache before playing.
-        * **Background Apps:** Close Chrome and background apps before starting the game.
-        """)
-        
-    with col2:
-        st.subheader("🤖 Roblox Best Performance Settings")
-        st.write("""
-        * **Graphics Mode:** Change Graphics Mode from Automatic to **Manual**.
-        * **Graphics Quality:** Lower graphics quality slider to **1-2 bars**.
-        * **Task Manager:** Set Roblox process priority to **High** in Task Manager.
-        """)
+# ---------------- SECTION 1: DYNAMIC LINK GENERATOR ----------------
+st.subheader("🔍 Auto Link Generator (Search Any Software)")
 
-    st.markdown("---")
-    st.subheader("💻 General PC Speed Up Tips")
-    st.info("Press `Windows + R`, type `temp`, `%temp%`, and `prefetch` to delete junk files and free up RAM!")
+user_input = st.text_input("Enter Software or OS Name (e.g., 'Windows 10 ISO', 'Photoshop Free Trial', 'OBS Studio'):")
 
-# 2. AUTOMATIC TRENDING NEWS
-elif choice == "🔥 Live Trending Gaming News":
-    st.header("🔥 Daily Auto-Updated Gaming & Tech News")
-    st.caption("Updated automatically via Google News RSS Feed (No API Key Required!)")
+if user_input.strip():
+    encoded_query = urllib.parse.quote(user_input.strip())
     
-    category = st.selectbox("Select Topic:", ["Gaming News", "Free Fire Updates", "Roblox Trends", "Tech News"])
+    st.success(f"Generated official download sources for: **{user_input}**")
     
-    keywords = {
-        "Gaming News": "gaming",
-        "Free Fire Updates": "free fire game",
-        "Roblox Trends": "roblox",
-        "Tech News": "technology"
-    }
+    col_g1, col_g2, col_g3 = st.columns(3)
     
-    query = keywords[category]
-    rss_url = f"https://news.google.com/rss/search?q={query}&hl=en-IN&gl=IN&ceid=IN:en"
-    
-    with st.spinner("Fetching latest updates from Google..."):
-        try:
-            feed = feedparser.parse(rss_url)
-            
-            if feed.entries:
-                st.success(f"Total {len(feed.entries[:10])} Latest News Found!")
-                for entry in feed.entries[:10]:
-                    st.markdown(f"### 📰 [{entry.title}]({entry.link})")
-                    st.caption(f"🗓️ Published: {entry.published}")
-                    st.markdown("---")
-            else:
-                st.error("No news found. Please refresh or try another topic.")
-        except Exception as e:
-            st.error(f"Error loading news: {e}")
+    with col_g1:
+        st.markdown("### 🌐 Official & Trusted Sources")
+        st.link_button(f"📥 Download via FileHippo", f"https://filehippo.com/search/?q={encoded_query}")
+        st.link_button(f"📥 Download via MajorGeeks", f"https://www.majorgeeks.com/files/search.html?q={encoded_query}")
 
-# 3. STUDY FORMULAS
-elif choice == "📚 9th & 10th Study Formulas":
-    st.header("📚 Quick Study Reference Formulas")
-    
-    st.subheader("📐 Mathematics Formulas")
-    st.write("""
-    * **Algebra:** $(a + b)^2 = a^2 + 2ab + b^2$
-    * **Algebra:** $(a - b)^2 = a^2 - 2ab + b^2$
-    * **Algebra:** $a^2 - b^2 = (a + b)(a - b)$
-    * **Area of Circle:** $\pi r^2$
-    """)
-    
-    st.subheader("⚛️ Physics Basic Formulas")
-    st.write("""
-    * **Speed:** $\text{Speed} = \\frac{\text{Distance}}{\text{Time}}$
-    * **Force (Newton's 2nd Law):** $F = m \\times a$
-    * **Ohm's Law:** $V = I \\times R$
-    """)
+    with col_g2:
+        st.markdown("### 🛡️ Verified Repositories")
+        st.link_button(f"📥 Search on Softpedia", f"https://www.softpedia.com/hubs/search.php?q={encoded_query}")
+        st.link_button(f"📥 Search on GitHub (Open Source)", f"https://github.com/search?q={encoded_query}")
+
+    with col_g3:
+        st.markdown("### 🔍 Direct Search Option")
+        st.link_button(f"🔎 Google Direct Download Search", f"https://www.google.com/search?q={encoded_query}+official+download")
+
+st.markdown("---")
+
+# ---------------- SECTION 2: POPULAR FREE SOFTWARE & OS ----------------
+st.subheader("📌 Popular Free Software & Windows ISO Links")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("### 💿 Operating Systems (Free / Official)")
+    st.link_button("🪟 Windows 10 Official ISO", "https://www.microsoft.com/en-in/software-download/windows10")
+    st.link_button("🪟 Windows 11 Official ISO", "https://www.microsoft.com/software-download/windows11")
+    st.link_button("🐧 Ubuntu Linux (Free OS)", "https://ubuntu.com/download/desktop")
+
+with col2:
+    st.markdown("### 🛠️ Utilities & Drivers")
+    st.link_button("⚙️ DirectX End-User Runtime", "https://www.microsoft.com/en-in/download/details.aspx?id=35")
+    st.link_button("📊 CPU-Z Hardware Info", "https://www.cpuid.com/softwares/cpu-z.html")
+    st.link_button("📦 7-Zip File Archiver", "https://www.7-zip.org/")
+
+with col3:
+    st.markdown("### 🎮 Gaming & Media")
+    st.link_button("🎥 VLC Media Player", "https://www.videolan.org/vlc/")
+    st.link_button("🤖 Roblox Engine", "https://www.roblox.com/download")
+    st.link_button("🚀 Steam Launcher", "https://store.steampowered.com/about/")
