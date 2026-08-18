@@ -1,69 +1,84 @@
 import streamlit as st
-from google import genai
-from gtts import gTTS
-import os
+import feedparser
 
-# 1. Setup and API Configuration
-# Note: Using the specific model name and API key provided in the requirements
-API_KEY = "AQ.Ab8RN6IpqRKjfpIMs03OzZeTf-ze6xWsgoSTEzw7Y3znd2CCjw"
-MODEL_ID = "gemini-1.5-flash"
+# Page Configuration
+st.set_page_config(page_title="Ultimate Gaming & Tech Hub", page_icon="🎮", layout="wide")
 
+st.title("🚀 Gaming, Tech & Study Portal")
+st.write("Welcome! Get the best PC optimization tips, trending news, and study guides all in one place.")
 
-# Initialize the Gemini Client
-client = genai.Client(api_key=API_KEY)
+# Sidebar for Navigation
+st.sidebar.title("📌 Menu")
+choice = st.sidebar.radio("Go to:", ["🎮 PC Gaming & Optimization Tips", "🔥 Live Trending Gaming News", "📚 9th & 10th Study Formulas"])
 
-# 2. User Interface (Streamlit)
-st.set_page_config(page_title="🎙️ AI Voice Wiki Assistant", layout="centered")
+# ---------------- SECTION 1: GAMING & OPTIMIZATION ----------------
+if choice == "🎮 PC Gaming & Optimization Tips":
+    st.header("🎮 Low-End PC Gaming & Optimization Guide")
+    
+    col1, col2 = st.col_row() if hasattr(st, 'col_row') else st.columns(2)
+    
+    with col1:
+        st.subheader("🔥 Free Fire Lag Fix (2GB / 4GB RAM)")
+        st.write("""
+        * **Graphics Setting:** Always set Display to **Smooth** and High FPS to **Normal**.
+        * **Clear Cache:** Open Free Fire Settings -> Others -> Clear Cache before playing.
+        * **Background Apps:** Close Chrome and background apps before starting the game.
+        """)
+        
+    with col2:
+        st.subheader("🤖 Roblox Best Performance Settings")
+        st.write("""
+        * **Graphics Mode:** Change Graphics Mode from Automatic to **Manual**.
+        * **Graphics Quality:** Lower graphics quality slider to **1-2 bars**.
+        * **Task Manager:** Set Roblox process priority to **High** in Task Manager.
+        """)
 
-st.title("🎙️ AI Voice Wiki Assistant")
-st.write("""
-Welcome, Student! Type any topic you want to learn about below. 
-The AI will give you a simple 3-point summary and read it out loud for you!
-""")
+    st.markdown("---")
+    st.subheader("💻 General PC Speed Up Tips")
+    st.info("Press `Windows + R`, type `temp`, `%temp%`, and `prefetch` to delete junk files and free up RAM!")
 
-# Input field for the student
-user_query = st.text_input("What would you like to learn about?", placeholder="e.g., Explain Photosynthesis")
+# ---------------- SECTION 2: AUTOMATIC TRENDING NEWS ----------------
+elif choice == "🔥 Live Trending Gaming News":
+    st.header("🔥 Daily Auto-Updated Gaming & Tech News")
+    st.caption("Updated automatically via Google News RSS Feed (No API Key Required!)")
+    
+    category = st.selectbox("Select Topic:", ["Gaming News", "Free Fire Updates", "Roblox Trends", "Tech News"])
+    
+    # Mapping search keywords to Google News RSS URLs
+    rss_urls = {
+        "Gaming News": "https://news.google.com/rss/search?q=gaming+news&hl=en-IN&gl=IN&ceid=IN:en",
+        "Free Fire Updates": "https://news.google.com/rss/search?q=free+fire+game&hl=en-IN&gl=IN&ceid=IN:en",
+        "Roblox Trends": "https://news.google.com/rss/search?q=roblox&hl=en-IN&gl=IN&ceid=IN:en",
+        "Tech News": "https://news.google.com/rss/search?q=technology+news&hl=en-IN&gl=IN&ceid=IN:en"
+    }
+    
+    with st.spinner("Fetching latest updates..."):
+        feed = feedparser.parse(rss_urls[category])
+        
+        if feed.entries:
+            for entry in feed.entries[:8]:  # Shows top 8 trending articles
+                with st.container():
+                    st.markdown(f"### 📰 [{entry.title}]({entry.link})")
+                    st.caption(f"🗓️ Published: {entry.published}")
+                    st.markdown("---")
+        else:
+            st.warning("Unable to fetch news right now. Please try again later.")
 
-# 3. App Logic & Integration
-if st.button("Get Answer & Voice"):
-    if user_query.strip() == "":
-        st.warning("Please enter a question first!")
-    else:
-        with st.spinner("Gemini is thinking and preparing your audio..."):
-            try:
-                # Gemini AI Integration
-                # We prompt the AI specifically for 3 bullet points as requested
-                prompt = f"Explain the following topic for a student in exactly 3 short, simple bullet points: {user_query}"
-                
-                response = client.models.generate_content(
-                    model=MODEL_ID,
-                    contents=prompt
-                )
-                
-                answer_text = response.text
-
-                # Display the text answer
-                st.subheader("Summary")
-                st.write(answer_text)
-
-                # 4. Text-to-Speech (gTTS Integration)
-                # We clean the text slightly (removing asterisks) for better voice clarity
-                audio_text = answer_text.replace("*", "") 
-                
-                tts = gTTS(text=audio_text, lang='en', slow=False)
-                audio_file = "response.mp3"
-                tts.save(audio_file)
-
-                # Embed and play the audio
-                st.audio(audio_file, format="audio/mp3")
-                
-                # Success message
-                st.success("Audio generated successfully!")
-
-            except Exception as e:
-                st.error(f"An error occurred: {e}")
-                st.info("Note: If the model name 'gemini-2.5-flash' is not yet released in your region, try changing it to 'gemini-1.5-flash' in the code.")
-
-# Footer
-st.markdown("---")
-st.caption("Powered by Google Gemini AI & gTTS")
+# ---------------- SECTION 3: STUDY FORMULAS ----------------
+elif choice == "📚 9th & 10th Study Formulas":
+    st.header("📚 Quick Study Reference Formulas")
+    
+    st.subheader("📐 Mathematics Formulas")
+    st.write("""
+    * **Algebra:** $(a + b)^2 = a^2 + 2ab + b^2$
+    * **Algebra:** $(a - b)^2 = a^2 - 2ab + b^2$
+    * **Algebra:** $a^2 - b^2 = (a + b)(a - b)$
+    * **Area of Circle:** $\pi r^2$
+    """)
+    
+    st.subheader("⚛️ Physics Basic Formulas")
+    st.write("""
+    * **Speed:** $\text{Speed} = \\frac{\text{Distance}}{\text{Time}}$
+    * **Force (Newton's 2nd Law):** $F = m \\times a$
+    * **Ohm's Law:** $V = I \\times R$
+    """)
