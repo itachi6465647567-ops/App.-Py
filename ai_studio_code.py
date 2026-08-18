@@ -1,30 +1,41 @@
 import streamlit as st
 import urllib.parse
+import streamlit.components.v1 as components
 
 # Page Configuration
-st.set_page_config(page_title="Ultimate World Resource Station", page_icon="🌐", layout="wide")
+st.set_page_config(page_title="Universal Resource Station", page_icon="🚀", layout="wide")
 
-st.title("🌐 Universal Direct Resource Station")
-st.write("தேடும் வெப்சைட்டிற்கு நேரடி இணைப்பு (Direct Redirect) மற்றும் உலகின் அனைத்து முக்கிய லிங்க்குகளும் ஒரே இடத்தில்!")
+st.title("🚀 Smart Direct Version & Resource Hub")
+st.write("குறிப்பிட்ட வெர்ஷன்கள் (e.g., Rufus 3.22, PrimeOS 0.4.5) டைப் செய்தவுடன் நேரடியாக டவுன்லோட் பக்கத்திற்கு அழைத்துச் செல்லும்!")
 
 st.markdown("---")
 
-# ---------------- SECTION 1: DIRECT WEBSITE REDIRECT ----------------
-st.subheader("🚀 Direct Website Finder (No Google Search Page!)")
+# ---------------- SECTION 1: AUTO DIRECT REDIRECT SEARCH ----------------
+st.subheader("🔍 Instant Direct Version Download Search")
 
-user_input = st.text_input("Enter Software / OS / Game Name (e.g., 'BlueStacks', 'PrimeOS', 'VLC'):")
+user_input = st.text_input("Enter Software / Specific Version Name (e.g., 'Rufus 3.22', 'PrimeOS 0.4.5', 'Anaconda Windows 7'):")
 
 if user_input.strip():
     encoded_query = urllib.parse.quote(user_input.strip())
     
-    st.success(f"Direct Official Link Ready for: **{user_input}**")
+    st.success(f"Redirecting directly to the exact version page for: **{user_input}**...")
     
-    # DuckDuckGo 'I'm Feeling Lucky' (Bypasses search results and goes direct to website)
-    direct_url = f"https://duckduckgo.com/?q=!ducky+{encoded_query}+official+website"
+    # Direct Official Version URL (DuckDuckGo 'I'm Feeling Lucky')
+    direct_version_url = f"https://duckduckgo.com/?q=!ducky+{encoded_query}+official+download"
     
-    st.link_button(f"⚡ Click Here: Open '{user_input}' Official Site Directly", direct_url, use_container_width=True)
+    # 1. Automatic JavaScript Redirect (Opens Direct Link Automatically)
+    js_code = f"""
+    <script>
+        setTimeout(function() {{
+            window.location.href = "{direct_version_url}";
+        }}, 1000);
+    </script>
+    """
+    components.html(js_code, height=0)
     
-    st.caption("Note: Dieser Button führt Sie напрямую zur offiziellen Webseite (Bypasses Google Search Results Page).")
+    # 2. Backup Direct Button (If Browser Blocks Popup/Auto-Redirect)
+    st.markdown("### ⚡ Click below if auto-redirect doesn't open automatically:")
+    st.link_button(f"🚀 Open Exact Version Page for '{user_input}' Directly", direct_version_url, use_container_width=True)
 
 st.markdown("---")
 
@@ -108,4 +119,4 @@ with tab5:
         st.link_button("🎓 Khan Academy (Free Learning)", "https://www.khanacademy.org/")
     with col_e2:
         st.link_button("🌐 Wikipedia Encyclopedia", "https://www.wikipedia.org/")
-        st.link_button("📄📄 National Digital Library of India", "https://ndl.iitkgp.ac.in/")
+        st.link_button("📄 National Digital Library of India", "https://ndl.iitkgp.ac.in/")
