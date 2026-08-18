@@ -1,41 +1,58 @@
 import streamlit as st
 import urllib.parse
-import streamlit.components.v1 as components
 
 # Page Configuration
 st.set_page_config(page_title="Universal Resource Station", page_icon="🚀", layout="wide")
 
-st.title("🚀 Smart Direct Version & Resource Hub")
-st.write("குறிப்பிட்ட வெர்ஷன்கள் (e.g., Rufus 3.22, PrimeOS 0.4.5) டைப் செய்தவுடன் நேரடியாக டவுன்லோட் பக்கத்திற்கு அழைத்துச் செல்லும்!")
+st.title("🚀 Smart Exact Version Finder & Resource Hub")
+st.write("சாஃப்ட்வேரின் பெயரை டைப் செய்தவுடன், அந்த குறிப்பிட்ட வெர்ஷனின் (Exact Version) நேரடி டவுன்லோட் பக்கங்களுக்குச் செல்லலாம்!")
 
 st.markdown("---")
 
-# ---------------- SECTION 1: AUTO DIRECT REDIRECT SEARCH ----------------
-st.subheader("🔍 Instant Direct Version Download Search")
+# ---------------- SECTION 1: EXACT VERSION DIRECT SEARCH ----------------
+st.subheader("🔍 Exact Version Direct Download Finder")
 
-user_input = st.text_input("Enter Software / Specific Version Name (e.g., 'Rufus 3.22', 'PrimeOS 0.4.5', 'Anaconda Windows 7'):")
+user_input = st.text_input("Enter Software & Exact Version (e.g., 'PrimeOS 0.4.5', 'Rufus 3.22', 'Anaconda Windows 7'):")
 
 if user_input.strip():
     encoded_query = urllib.parse.quote(user_input.strip())
     
-    st.success(f"Redirecting directly to the exact version page for: **{user_input}**...")
+    st.success(f"Finding exact version links for: **{user_input}**")
     
-    # Direct Official Version URL (DuckDuckGo 'I'm Feeling Lucky')
-    direct_version_url = f"https://duckduckgo.com/?q=!ducky+{encoded_query}+official+download"
+    # Direct Repository & Download Archive Links
+    st.markdown("### ⚡ Direct Version Download Sources")
     
-    # 1. Automatic JavaScript Redirect (Opens Direct Link Automatically)
-    js_code = f"""
-    <script>
-        setTimeout(function() {{
-            window.location.href = "{direct_version_url}";
-        }}, 1000);
-    </script>
-    """
-    components.html(js_code, height=0)
+    col1, col2 = st.columns(2)
     
-    # 2. Backup Direct Button (If Browser Blocks Popup/Auto-Redirect)
-    st.markdown("### ⚡ Click below if auto-redirect doesn't open automatically:")
-    st.link_button(f"🚀 Open Exact Version Page for '{user_input}' Directly", direct_version_url, use_container_width=True)
+    with col1:
+        # SourceForge Direct Search (Best for PrimeOS, Rufus, Android-x86 older versions)
+        st.link_button(
+            f"📦 SourceForge Archive for '{user_input}'", 
+            f"https://sourceforge.net/directory/?q={encoded_query}", 
+            use_container_width=True
+        )
+        
+        # GitHub Releases Direct Search (Best for Open Source exact versions)
+        st.link_button(
+            f"🐙 GitHub Releases for '{user_input}'", 
+            f"https://github.com/search?q={encoded_query}&type=releases", 
+            use_container_width=True
+        )
+
+    with col2:
+        # Internet Archive (Best for very old/deprecated versions)
+        st.link_button(
+            f"🏛️ Internet Archive for '{user_input}'", 
+            f"https://archive.org/search.php?query={encoded_query}", 
+            use_container_width=True
+        )
+        
+        # Google Direct Download Index (Exact file search)
+        st.link_button(
+            f"🔎 Google Direct File Search for '{user_input}'", 
+            f"https://www.google.com/search?q={encoded_query}+direct+download+file", 
+            use_container_width=True
+        )
 
 st.markdown("---")
 
@@ -55,8 +72,8 @@ with tab1:
     st.markdown("### 💿 Android OS for PC & Desktop OS")
     col_os1, col_os2 = st.columns(2)
     with col_os1:
-        st.link_button("🌐 PrimeOS Official (Android for PC)", "https://www.primeos.in/")
-        st.link_button("🌐 Bliss OS (Android OS for PC)", "https://blissos.org/")
+        st.link_button("🌐 PrimeOS Official", "https://www.primeos.in/")
+        st.link_button("🌐 Bliss OS Official", "https://blissos.org/")
         st.link_button("🌐 Phoenix OS Official", "http://www.phoenixos.com/")
         st.link_button("🪟 Windows 10 Official ISO", "https://www.microsoft.com/en-in/software-download/windows10")
     with col_os2:
