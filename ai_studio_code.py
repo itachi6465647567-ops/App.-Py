@@ -2,10 +2,19 @@ import streamlit as st
 import streamlit.components.v1 as components
 import urllib.parse
 
+# ---------------- MONETAG FILE VERIFICATION HANDLER ----------------
+# அப்லோட் செய்யப்பட்ட Monetag HTML ஃபைலை ரீட் செய்ய
+try:
+    with open("95c357e457206bc35e5824e28d5941da.html", "r") as f:
+        monetag_content = f.read()
+    st.markdown(f"<!-- Monetag File: {monetag_content} -->", unsafe_allow_html=True)
+except Exception:
+    pass
+
 # Page Configuration
 st.set_page_config(page_title="Universal Resource Station", page_icon="🚀", layout="wide")
 
-# ---------------- MONETAG VERIFICATION CODE ----------------
+# ---------------- MONETAG SCRIPT VERIFICATION CODE ----------------
 monetag_meta_code = """
 <script>
     var meta = document.createElement('meta');
@@ -15,7 +24,7 @@ monetag_meta_code = """
 </script>
 """
 components.html(monetag_meta_code, height=0, width=0)
-# -----------------------------------------------------------
+# -----------------------------------------------------------------
 
 st.title("🚀 Smart Direct Download & Resource Hub")
 st.write("சாஃப்ட்வேர் மற்றும் குறிப்பிட்ட வெர்ஷன்களின் (Exact Versions) நேரடி டவுன்லோட் லிங்க்குகள்!")
@@ -120,7 +129,7 @@ with tab5:
     st.markdown("### 📚 Study & Educational Platforms")
     col_e1, col_e2 = st.columns(2)
     with col_e1:
-        st.link_button("📘 TN School Textbooks Portal","https://www.tntextbooks.in/p/school-books.html?m=1") 
+        st.link_button("📘 TN School Textbooks Portal", "https://www.tntextbooks.in/p/school-books.html?m=1") 
         st.link_button("🎓 Khan Academy (Free Learning)", "https://www.khanacademy.org/")
     with col_e2:
         st.link_button("🌐 Wikipedia Encyclopedia", "https://www.wikipedia.org/")
