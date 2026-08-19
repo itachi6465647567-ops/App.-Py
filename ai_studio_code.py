@@ -1,8 +1,10 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import urllib.parse
 
 # Page Configuration
-st.set_page_config(page_title="Universal Direct Resource Station", page_icon="🚀", layout="wide")
+st.set_page_config(page_title="Universal Resource Station", page_icon="🚀", layout="wide")
+
 # ---------------- MONETAG VERIFICATION CODE ----------------
 monetag_meta_code = """
 <script>
@@ -15,28 +17,28 @@ monetag_meta_code = """
 components.html(monetag_meta_code, height=0, width=0)
 # -----------------------------------------------------------
 
-st.title("🚀 Smart Exact Version Direct Finder")
-st.write("சாஃப்ட்வேர் அல்லது ஆபரேட்டிங் சிஸ்டத்தின் குறிப்பிட்ட வெர்ஷனை (e.g., PrimeOS Classic 0.4.5, Rufus 3.22) டைப் செய்யுங்கள். நேரடி டவுன்லோட் இணைப்பு உருவாக்கப்படும்!")
+st.title("🚀 Smart Direct Download & Resource Hub")
+st.write("சாஃப்ட்வேர் மற்றும் குறிப்பிட்ட வெர்ஷன்களின் (Exact Versions) நேரடி டவுன்லோட் லிங்க்குகள்!")
 
 st.markdown("---")
 
-# ---------------- SECTION 1: ONE-CLICK EXACT VERSION FINDER ----------------
-st.subheader("🔍 Exact Version Search & Direct Redirect")
+# ---------------- SECTION 1: DIRECT DOWNLOAD FINDER ----------------
+st.subheader("🔍 Exact Version Direct Download Finder")
 
-user_input = st.text_input("Enter Exact Software & Version Name:")
+user_input = st.text_input("Enter Software or OS Name (e.g., 'Anaconda3 2020.02', 'Rufus 3.22', 'PrimeOS Classic 0.4.5'):")
 
 if user_input.strip():
     encoded_query = urllib.parse.quote(user_input.strip())
     
-    st.success(f"Found exact direct download link for: **{user_input}**")
+    st.success(f"Finding direct download links for: **{user_input}**")
     
-    # DuckDuckGo Direct Link Engine (Automatically finds the exact version page)
-    direct_download_url = f"https://duckduckgo.com/?q=!ducky+{encoded_query}+direct+download+file"
+    # Direct Download Engine
+    direct_url = f"https://duckduckgo.com/?q=!ducky+{encoded_query}+direct+download+file"
     
-    # SINGLE DIRECT BUTTON (No secondary options)
+    # SINGLE DIRECT BUTTON
     st.link_button(
-        f"📥 Download '{user_input}' Directly Now", 
-        direct_download_url, 
+        f"📥 Download '{user_input}' Directly", 
+        direct_url, 
         use_container_width=True
     )
 
