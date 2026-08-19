@@ -3,6 +3,17 @@ import urllib.parse
 
 # Page Configuration
 st.set_page_config(page_title="Universal Direct Resource Station", page_icon="🚀", layout="wide")
+# ---------------- MONETAG VERIFICATION CODE ----------------
+monetag_meta_code = """
+<script>
+    var meta = document.createElement('meta');
+    meta.name = "monetag";
+    meta.content = "95c357e457206bc35e5824e28d5941da";
+    document.getElementsByTagName('head')[0].appendChild(meta);
+</script>
+"""
+components.html(monetag_meta_code, height=0, width=0)
+# -----------------------------------------------------------
 
 st.title("🚀 Smart Exact Version Direct Finder")
 st.write("சாஃப்ட்வேர் அல்லது ஆபரேட்டிங் சிஸ்டத்தின் குறிப்பிட்ட வெர்ஷனை (e.g., PrimeOS Classic 0.4.5, Rufus 3.22) டைப் செய்யுங்கள். நேரடி டவுன்லோட் இணைப்பு உருவாக்கப்படும்!")
