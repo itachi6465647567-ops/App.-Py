@@ -120,7 +120,7 @@ with tab5:
     st.markdown("### 📚 Study & Educational Platforms")
     col_e1, col_e2 = st.columns(2)
     with col_e1:
-        st.link_button("📘 TN School Textbooks Portal", "https://www.textbooksonline.tn.nic.in/","https://www.tntextbooks.in/p/school-books.html?m=1") 
+        st.link_button("📘 TN School Textbooks Portal","https://www.tntextbooks.in/p/school-books.html?m=1") 
         st.link_button("🎓 Khan Academy (Free Learning)", "https://www.khanacademy.org/")
     with col_e2:
         st.link_button("🌐 Wikipedia Encyclopedia", "https://www.wikipedia.org/")
