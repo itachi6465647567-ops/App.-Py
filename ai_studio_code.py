@@ -5,8 +5,7 @@ import urllib.parse
 # Page Configuration
 st.set_page_config(page_title="Universal Resource Station", page_icon="🚀", layout="wide")
 
-# ---------------- ADSTERRA BACKGROUND ADS (POPUNDER / NATIVE / SMART SCRIPTS) ----------------
-# Adsterra Script 1, Script 2 & Script 3
+# ---------------- ADSTERRA BACKGROUND ADS (POPUNDER & SMART SCRIPTS) ----------------
 bg_ads_code = """
 <script async="async" data-cfasync="false" src="https://pl30928304.effectivecpmnetwork.com/87587b138b6cbbd6f311545c5514b3fa/invoke.js"></script>
 <div id="container-87587b138b6cbbd6f311545c5514b3fa"></div>
@@ -14,14 +13,14 @@ bg_ads_code = """
 """
 components.html(bg_ads_code, height=0, width=0)
 
-# DIRECT LINK URL (Adsterra Direct Link #4)
+# DIRECT LINK URL (Adsterra Direct Link)
 ADSTERRA_DIRECT_LINK = "https://www.effectivecpmnetwork.com/vm40ca0tdg?key=adca778f2453427400f70fd04e0b54f7"
 
 # ---------------- TITLE & TOP BANNER AD ----------------
 st.title("🚀 Smart Direct Download & Resource Hub")
 st.write("சாஃப்ட்வேர் மற்றும் குறிப்பிட்ட வெர்ஷன்களின் (Exact Versions) நேரடி டவுன்லோட் லிங்க்குகள்!")
 
-# 468x60 Top Banner Ad (#3)
+# 468x60 Top Banner Ad
 top_banner_code = """
 <div style="text-align: center;">
     <script type="text/javascript">
@@ -40,10 +39,6 @@ components.html(top_banner_code, height=75)
 
 st.markdown("---")
 
-
-    components.html(dual_click_html, height=70)
-
-st.markdown("---")
 # ---------------- SECTION 1: DIRECT DOWNLOAD FINDER ----------------
 st.subheader("🔍 Exact Version Direct Download Finder")
 
@@ -56,7 +51,7 @@ if user_input.strip():
     # Direct Google Search Link
     direct_url = f"https://www.google.com/search?q={encoded_query}+direct+download"
     
-    # Dual Trigger Button (Opens Direct Link Ad + Download Link)
+    # Dual Trigger Button (Opens Direct Link Ad + Google Search)
     dual_click_html = f"""
     <div style="text-align: center; margin-top: 10px;">
         <a href="{direct_url}" target="_blank" onclick="window.open('{ADSTERRA_DIRECT_LINK}', '_blank');" 
@@ -67,6 +62,8 @@ if user_input.strip():
     </div>
     """
     components.html(dual_click_html, height=70)
+
+st.markdown("---")
 
 # ---------------- SECTION 2: ALL WORLD IMPORTANT LINKS & SIDEBAR AD ----------------
 st.subheader("📚 World Resource Directory")
@@ -153,7 +150,7 @@ with col_main:
             st.link_button("🌐 Wikipedia Encyclopedia", "https://www.wikipedia.org/")
             st.link_button("📄 National Digital Library of India", "https://ndl.iitkgp.ac.in/")
 
-# 160x300 Vertical Banner Ad (#5)
+# 160x300 Vertical Banner Ad
 with col_sidebar_ad:
     st.markdown("### 📢 Sponsored")
     sidebar_ad_code = """
