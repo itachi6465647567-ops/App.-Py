@@ -48,13 +48,13 @@ if user_input.strip():
     encoded_query = urllib.parse.quote(user_input.strip())
     st.success(f"Finding direct download links for: **{user_input}**")
     
-    # Direct Redirect Google Link (I'm Feeling Lucky Parameter Added)
-    direct_url = f"https://www.google.com/search?q={encoded_query}+direct+download&btnI=I%27m+Feeling+Lucky"
+    # DuckDuckGo Direct First Result Bang Link (!ducky)
+    direct_url = f"https://duckduckgo.com/?q=!ducky+{encoded_query}+direct+download"
     
-    # Dual Trigger Button (Opens Direct Link Ad + Direct Download Site)
+    # Smooth Dual Trigger Button (Opens Adsterra Direct Link + Direct Target Site)
     dual_click_html = f"""
     <div style="text-align: center; margin-top: 10px;">
-        <a href="{direct_url}" target="_blank" onclick="window.open('{ADSTERRA_DIRECT_LINK}', '_blank');" 
+        <a href="{direct_url}" target="_blank" rel="noopener noreferrer" onclick="window.open('{ADSTERRA_DIRECT_LINK}', '_blank');" 
            style="background-color: #ff4b4b; color: white; padding: 14px 28px; text-decoration: none; 
                   font-weight: bold; border-radius: 8px; display: block; font-size: 18px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
            📥 Download '{user_input}' Directly
