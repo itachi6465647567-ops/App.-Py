@@ -40,6 +40,10 @@ components.html(top_banner_code, height=75)
 
 st.markdown("---")
 
+
+    components.html(dual_click_html, height=70)
+
+st.markdown("---")
 # ---------------- SECTION 1: DIRECT DOWNLOAD FINDER ----------------
 st.subheader("🔍 Exact Version Direct Download Finder")
 
@@ -49,8 +53,8 @@ if user_input.strip():
     encoded_query = urllib.parse.quote(user_input.strip())
     st.success(f"Finding direct download links for: **{user_input}**")
     
-    # Direct Download Link via DuckDuckGo
-    direct_url = f"https://duckduckgo.com/?q=!ducky+{encoded_query}+direct+download+file"
+    # Direct Google Search Link
+    direct_url = f"https://www.google.com/search?q={encoded_query}+direct+download"
     
     # Dual Trigger Button (Opens Direct Link Ad + Download Link)
     dual_click_html = f"""
@@ -63,8 +67,6 @@ if user_input.strip():
     </div>
     """
     components.html(dual_click_html, height=70)
-
-st.markdown("---")
 
 # ---------------- SECTION 2: ALL WORLD IMPORTANT LINKS & SIDEBAR AD ----------------
 st.subheader("📚 World Resource Directory")
