@@ -48,10 +48,10 @@ if user_input.strip():
     encoded_query = urllib.parse.quote(user_input.strip())
     st.success(f"Finding direct download links for: **{user_input}**")
     
-    # Direct Google Search Link
-    direct_url = f"https://www.google.com/search?q={encoded_query}+direct+download"
+    # Direct Redirect Google Link (I'm Feeling Lucky Parameter Added)
+    direct_url = f"https://www.google.com/search?q={encoded_query}+direct+download&btnI=I%27m+Feeling+Lucky"
     
-    # Dual Trigger Button (Opens Direct Link Ad + Google Search)
+    # Dual Trigger Button (Opens Direct Link Ad + Direct Download Site)
     dual_click_html = f"""
     <div style="text-align: center; margin-top: 10px;">
         <a href="{direct_url}" target="_blank" onclick="window.open('{ADSTERRA_DIRECT_LINK}', '_blank');" 
