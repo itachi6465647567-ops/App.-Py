@@ -1,14 +1,16 @@
-import streamlit as st
-import json
-import time
 import datetime
+import json
 import random
+import time
+import streamlit as st
 
 # Page Config & Custom Styling
-st.set_page_config(page_title="Pro Gaming Redeem Hub", page_icon="🎮", layout="centered")
+st.set_page_config(
+    page_title="Pro Gaming Redeem Hub", page_icon="🎮", layout="centered"
+)
 
-# Custom CSS for Beautiful UI
-st.markdown("""
+st.markdown(
+    """
     <style>
     .stApp {
         background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
@@ -34,7 +36,7 @@ st.markdown("""
         margin-bottom: 20px;
     }
     .winner-count {
-        font-size: 24px;
+        font-size: 26px;
         font-weight: bold;
         color: #00f2fe;
     }
@@ -46,26 +48,40 @@ st.markdown("""
         margin-bottom: 15px;
     }
     </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 # Title Section
-st.markdown('<div class="title-box">🎮 ULTIMATE GAMING REDEEM CODES</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="title-box">🎮 ULTIMATE GAMING REDEEM CODES</div>',
+    unsafe_allow_html=True,
+)
 st.caption("✨ 100% Working Daily Live Redeem Codes")
 
-# Dynamic Winner Counter
+# 1 to 1000 Dynamic Winner Counter Logic (Increases with time of day)
 now = datetime.datetime.now()
-base_winners = 42 + (now.hour * 2) + random.randint(1, 4)
+total_seconds_today = (
+    now.hour * 3600 + now.minute * 60 + now.second
+)  # 0 to 86400
+calculated_winners = int((total_seconds_today / 86400) * 980) + random.randint(
+    1, 20
+)
+calculated_winners = min(1000, max(1, calculated_winners))  # Cap between 1 and 1000
 
-st.markdown(f"""
+st.markdown(
+    f"""
     <div class="winner-card">
         🔥 <b>Today's Claimed Rewards:</b> 
-        <span class="winner-count">{base_winners} Gamers</span>
-        <br><small style="color: #4facfe;">⚡ Real codes available in database!</small>
+        <span class="winner-count">{calculated_winners} / 1000 Players</span>
+        <br><small style="color: #4facfe;">⚡ Real working codes released today!</small>
     </div>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
-# Function to load codes safely from JSON
-@st.cache_data
+
+# Function to load codes from JSON
 def load_codes():
     try:
         with open("codes.json", "r") as f:
@@ -73,15 +89,16 @@ def load_codes():
     except Exception as e:
         return []
 
+
 codes_data = load_codes()
 
-# 🔍 SEARCH BAR COMPONENT
-st.markdown("### 🔍 Search Your Game Codes")
-search_query = st.text_input("Enter Game Name or Keyword (e.g., Free Fire, Roblox, Diamonds)", "").strip().lower()
-
+# Header Controls: Info & Refresh
 col1, col2 = st.columns([3, 1])
 with col1:
-    st.info("💡 **Tip:** Click 'Unlock Code' & wait 10s to reveal your unique working code!")
+    st.info(
+        "💡 **Tip:** Click 'Unlock Code' & wait 10s to reveal your unique"
+        " working code!"
+    )
 with col2:
     if st.button("🔄 Refresh", use_container_width=True):
         for k in list(st.session_state.keys()):
@@ -91,18 +108,9 @@ with col2:
 
 st.markdown("---")
 
-# Filter codes based on Search Query
-filtered_data = []
-if codes_data:
-    for item in codes_data:
-        game_name = item.get("game", "")
-        reward_info = item.get("reward", "")
-        if search_query in game_name.lower() or search_query in reward_info.lower():
-            filtered_data.append(item)
-
 # Render Game Code Cards
-if filtered_data:
-    for index, item in enumerate(filtered_data):
+if codes_data:
+    for index, item in enumerate(codes_data):
         game_name = item.get("game", "Game")
         code_list = item.get("codes", ["N/A"])
         reward_info = item.get("reward", "Free Rewards")
@@ -119,45 +127,70 @@ if filtered_data:
         if unlocked_key not in st.session_state:
             st.session_state[unlocked_key] = False
 
-        st.markdown(f'<div class="game-card">', unsafe_allow_html=True)
+        st.markdown('<div class="game-card">', unsafe_allow_html=True)
         c1, c2 = st.columns([3, 1.2])
-        
+
         with c1:
             st.markdown(f"### 🎯 **{game_name}**")
             st.write(f"🎁 **Reward:** {reward_info}")
-            
+
             if st.session_state[unlocked_key]:
                 st.code(current_code, language="text")
-                st.success("🎉 Code Unlocked! Copy and redeem in official site.")
+                st.success(
+                    "🎉 Code Unlocked! Copy and redeem in official site."
+                )
             else:
                 st.code("••••-••••-••••", language="text")
-            
+
         with c2:
             st.write("")
             if status_info == "Active":
                 st.success("🟢 Active")
             else:
                 st.error("🔴 Expired")
-            
+
             if not st.session_state[unlocked_key] and status_info == "Active":
-                if st.button("🔓 Unlock Code", key=f"btn_{game_name}_{index}", use_container_width=True):
+                if st.button(
+                    "🔓 Unlock Code",
+                    key=f"btn_{game_name}_{index}",
+                    use_container_width=True,
+                ):
                     timer_placeholder = st.empty()
                     for seconds_left in range(10, 0, -1):
-                        timer_placeholder.warning(f"⏳ Unlocking in {seconds_left}s...")
+                        timer_placeholder.warning(
+                            f"⏳ Unlocking in {seconds_left}s..."
+                        )
                         time.sleep(1)
-                    
+
                     timer_placeholder.empty()
                     st.session_state[unlocked_key] = True
                     st.rerun()
 
-        st.markdown('</div>', unsafe_allow_html=True)
-else:
-    st.warning("❌ No matching codes found! Try searching for 'Free Fire' or 'Roblox'.")
+        st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("---")
 
-# Recent Live Feed
-st.subheader("⚡ Live Winner Feed")
-fake_users = ["Tamil_Gamer_**88", "Pro_FreeFire_**12", "Roblox_King_**99", "FF_Master_**07", "Dark_Ninja_**34"]
-for user in fake_users:
-    st.caption(f"✅ **{user}** just unlocked a code ({random.randint(1, 10)} mins ago)")
+# Dynamic Mass Winners Feed
+st.subheader("🔥 Live Today's Winners Feed")
+
+mass_usernames = [
+    "Mass_FreeFire_FF",
+    "Gamer_King_FF",
+    "Dharsh_FF_Pro",
+    "Roblox_Mass_Gamer",
+    "Headshot_King",
+    "Tamil_Gamer_FF",
+    "Killer_Boy_2026",
+    "Pro_FreeFire_Player",
+    "Roblox_Master_007",
+    "Diamond_Hunter_FF",
+    "FreeFire_Boss_Tamil",
+    "Shadow_Gamer_FF",
+]
+
+# Pick 5 random users from mass_usernames list on every render
+sample_winners = random.sample(mass_usernames, 5)
+
+for user in sample_winners:
+    mins = random.randint(1, 20)
+    st.caption(f"✅ **{user}** just unlocked a code ({mins} mins ago)")
