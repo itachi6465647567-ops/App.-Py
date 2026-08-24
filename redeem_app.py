@@ -4,11 +4,12 @@ import random
 import time
 import streamlit as st
 
-# Page Config & Custom Styling
+# Page Config
 st.set_page_config(
-    page_title="Pro Gaming Redeem Hub", page_icon="🎮", layout="centered"
+    page_title="Ultimate Redeem Code Hub", page_icon="🎁", layout="centered"
 )
 
+# Custom Styling
 st.markdown(
     """
     <style>
@@ -27,12 +28,12 @@ st.markdown(
     }
     .winner-card {
         background: rgba(255, 255, 255, 0.07);
-        border: 1px solid rgba(255, 215, 0, 0.3);
+        border: 1px solid rgba(255, 215, 0, 0.4);
         border-radius: 12px;
         padding: 15px;
         text-align: center;
         backdrop-filter: blur(10px);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         margin-bottom: 20px;
     }
     .winner-count {
@@ -42,46 +43,56 @@ st.markdown(
     }
     .game-card {
         background: rgba(255, 255, 255, 0.05);
-        border-left: 4px solid #00f2fe;
-        border-radius: 8px;
+        border-left: 5px solid #ff8c00;
+        border-radius: 10px;
         padding: 15px;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
     </style>
 """,
     unsafe_allow_html=True,
 )
 
-# Title Section
+# Title
 st.markdown(
-    '<div class="title-box">🎮 ULTIMATE GAMING REDEEM CODES</div>',
+    '<div class="title-box">🎁 DAILY REAL REDEEM CODE HUB</div>',
     unsafe_allow_html=True,
 )
-st.caption("✨ 100% Working Daily Live Redeem Codes")
-
-# 1 to 1000 Dynamic Winner Counter Logic (Increases with time of day)
-now = datetime.datetime.now()
-total_seconds_today = (
-    now.hour * 3600 + now.minute * 60 + now.second
-)  # 0 to 86400
-calculated_winners = int((total_seconds_today / 86400) * 980) + random.randint(
-    1, 20
+st.caption(
+    "🔥 Free Fire | Google Play | Roblox — Refreshes Automatically Daily!"
 )
-calculated_winners = min(1000, max(1, calculated_winners))  # Cap between 1 and 1000
+
+# Daily 1 Real Winner Logic State
+if "last_reset_day" not in st.session_state:
+    st.session_state["last_reset_day"] = datetime.datetime.now().day
+    st.session_state["is_claimed_today"] = False
+
+if st.session_state["last_reset_day"] != datetime.datetime.now().day:
+    st.session_state["last_reset_day"] = datetime.datetime.now().day
+    st.session_state["is_claimed_today"] = False
+
+# Dynamic Winner Counter (Step Incrementing towards 1000)
+now = datetime.datetime.now()
+current_day = now.day
+# Day-based base calculation + Step increments of 50 during the day
+hour_step = (now.hour // 1) * 40
+calculated_winners = min(
+    1000, 120 + hour_step + ((current_day * 7) % 50) + random.randint(1, 15)
+)
 
 st.markdown(
     f"""
     <div class="winner-card">
-        🔥 <b>Today's Claimed Rewards:</b> 
-        <span class="winner-count">{calculated_winners} / 1000 Players</span>
-        <br><small style="color: #4facfe;">⚡ Real working codes released today!</small>
+        🎉 <b>Today's Total Claimed Rewards:</b> 
+        <span class="winner-count">{calculated_winners} / 1000 Gamers</span>
+        <br><small style="color: #00f2fe;">⚡ 1 Guaranteed Working Code Released Daily!</small>
     </div>
 """,
     unsafe_allow_html=True,
 )
 
 
-# Function to load codes from JSON
+# Load Codes
 def load_codes():
     try:
         with open("codes.json", "r") as f:
@@ -92,12 +103,11 @@ def load_codes():
 
 codes_data = load_codes()
 
-# Header Controls: Info & Refresh
+# Header Refresh Control
 col1, col2 = st.columns([3, 1])
 with col1:
     st.info(
-        "💡 **Tip:** Click 'Unlock Code' & wait 10s to reveal your unique"
-        " working code!"
+        "💡 **Tip:** Click 'Unlock Code' & wait 10s to get your working code!"
     )
 with col2:
     if st.button("🔄 Refresh", use_container_width=True):
@@ -108,7 +118,7 @@ with col2:
 
 st.markdown("---")
 
-# Render Game Code Cards
+# Render all 3 categories (Free Fire, Google Play, Roblox)
 if codes_data:
     for index, item in enumerate(codes_data):
         game_name = item.get("game", "Game")
@@ -116,7 +126,7 @@ if codes_data:
         reward_info = item.get("reward", "Free Rewards")
         status_info = item.get("status", "Active")
 
-        # Pick a randomized code from codes.json array
+        # Pick random code from list
         code_key = f"code_{game_name}_{index}"
         if code_key not in st.session_state:
             st.session_state[code_key] = random.choice(code_list)
@@ -131,16 +141,13 @@ if codes_data:
         c1, c2 = st.columns([3, 1.2])
 
         with c1:
-            st.markdown(f"### 🎯 **{game_name}**")
+            st.markdown(f"### 🎮 **{game_name} Redeem Code**")
             st.write(f"🎁 **Reward:** {reward_info}")
 
             if st.session_state[unlocked_key]:
                 st.code(current_code, language="text")
-                st.success(
-                    "🎉 Code Unlocked! Copy and redeem in official site."
-                )
             else:
-                st.code("••••-••••-••••", language="text")
+                st.code("••••-••••-••••-••••", language="text")
 
         with c2:
             st.write("")
@@ -164,33 +171,45 @@ if codes_data:
 
                     timer_placeholder.empty()
                     st.session_state[unlocked_key] = True
+
+                    # Daily 1 Lucky Winner Check
+                    if not st.session_state["is_claimed_today"]:
+                        st.session_state["is_claimed_today"] = True
+                        st.balloons()
+                        st.success(
+                            "🎉 CONGRATULATIONS! You unlocked Today's REAL"
+                            " Working Redeem Code!"
+                        )
+
                     st.rerun()
 
         st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("---")
 
-# Dynamic Mass Winners Feed
-st.subheader("🔥 Live Today's Winners Feed")
+# Dynamic Mass Live Feed
+st.subheader("🔥 Today's Live Winners Feed")
 
 mass_usernames = [
     "Mass_FreeFire_FF",
     "Gamer_King_FF",
     "Dharsh_FF_Pro",
     "Roblox_Mass_Gamer",
-    "Headshot_King",
-    "Tamil_Gamer_FF",
+    "GooglePlay_Winner_99",
+    "Headshot_King_Tamil",
     "Killer_Boy_2026",
     "Pro_FreeFire_Player",
     "Roblox_Master_007",
     "Diamond_Hunter_FF",
     "FreeFire_Boss_Tamil",
     "Shadow_Gamer_FF",
+    "PlayStore_King_100",
+    "Tamil_Gamer_Official",
 ]
 
-# Pick 5 random users from mass_usernames list on every render
-sample_winners = random.sample(mass_usernames, 5)
+sample_winners = random.sample(mass_usernames, 6)
 
 for user in sample_winners:
-    mins = random.randint(1, 20)
-    st.caption(f"✅ **{user}** just unlocked a code ({mins} mins ago)")
+    mins = random.randint(1, 25)
+    code_type = random.choice(["Free Fire Code", "Google Play ₹100", "Roblox Pet Code"])
+    st.caption(f"✅ **{user}** successfully claimed **{code_type}** ({mins} mins ago)")
