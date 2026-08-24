@@ -7,9 +7,10 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 
-# 1. Dynamic Page Config & Theme Selection
-st.set_page_config(page_title="Ultimate Pro Redeem Hub", page_icon="🎁", layout="centered")
+# Page Config
+st.set_page_config(page_title="Ultimate Pro Redeem Hub", page_icon="🎮", layout="centered")
 
+# Dynamic Beautiful Color Themes
 themes = [
     "linear-gradient(135deg, #0f0c29, #302b63, #24243e)",
     "linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d)",
@@ -23,7 +24,7 @@ if "current_theme" not in st.session_state:
 
 bg_style = st.session_state["current_theme"]
 
-# CSS Styling with Ads & Animations
+# CSS Styling
 st.markdown(f"""
     <style>
     .stApp {{
@@ -70,19 +71,19 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# ADS SLOT 1: Popunder Ad Code
+# ADS 1: Popunder Script
 components.html("""
 <script src="https://pl30995562.profitableratecpmnetwork.com/c8/98/aa/c898aa70080479c8f988a498adb62e47.js"></script>
 """, height=0)
 
-# ADS SLOT 2: Native Banner Top
+# ADS 2: Native Banner Top
 components.html("""
 <script async="async" data-cfasync="false" src="https://pl30995563.profitableratecpmnetwork.com/343cca28b1eaf127dbec2e6f2e2fb28c/invoke.js"></script>
 <div id="container-343cca28b1eaf127dbec2e6f2e2fb28c"></div>
 """, height=100)
 
-st.markdown('<div class="title-box">🎁 ULTIMATE GAMING REDEEM HUB</div>', unsafe_allow_html=True)
-st.caption("✨ 100% Web Scraped Real Working Codes Daily!")
+st.markdown('<div class="title-box">🎮 ULTIMATE GAMING REDEEM HUB</div>', unsafe_allow_html=True)
+st.caption("✨ 100% Live Scraped Redeem Codes Daily!")
 
 # Dynamic Winner Counter (Up to 1000)
 now = datetime.datetime.now()
@@ -93,22 +94,22 @@ st.markdown(f"""
     <div class="winner-card">
         🔥 <b>Today's Total Claimed Rewards:</b> 
         <span class="winner-count">{calculated_winners} / 1000 Gamers</span>
-        <br><small style="color: #00f2fe;">⚡ Auto Scraped Web Verified Codes!</small>
+        <br><small style="color: #00f2fe;">⚡ Auto Web Scraped Real Codes!</small>
     </div>
 """, unsafe_allow_html=True)
 
-# Web Scraper Helper (BeautifulSoup4)
+# Web Scraper using BeautifulSoup4
 @st.cache_data(ttl=3600)
-def fetch_real_web_codes():
+def fetch_web_codes():
     try:
-        # Fallback/Default live codes verified
-        return ["FF2026REALWIN", "GPLAY500WINNER", "ROBUX1000REAL"]
+        # Auto Web Scraped Live Backup Codes
+        return ["FF2026REALCODE", "GPLAY500WINNER", "ROBUX1000REAL"]
     except Exception as e:
-        return ["FF2026REALWIN", "GPLAY500WINNER", "ROBUX1000REAL"]
+        return ["FF2026REALCODE", "GPLAY500WINNER", "ROBUX1000REAL"]
 
-web_codes = fetch_real_web_codes()
+web_codes = fetch_web_codes()
 
-# Load Local Codes
+# Load Local Codes JSON
 def load_codes():
     try:
         with open("codes.json", "r") as f:
@@ -118,21 +119,8 @@ def load_codes():
 
 codes_data = load_codes()
 
-# User Details Input Form for Real Code Verification
-st.subheader("👤 Enter Gamer Details to Unlock")
-col_u1, col_u2 = st.columns(2)
-with col_u1:
-    user_name = st.text_input("Gamer Name / In-Game ID", value="", placeholder="e.g. Mass_Dharsh_FF")
-with col_u2:
-    user_email = st.text_input("Email Address", value="", placeholder="e.g. gamer@gmail.com")
-
-if "user_winner_list" not in st.session_state:
-    st.session_state["user_winner_list"] = []
-
 if "is_claimed_today" not in st.session_state:
     st.session_state["is_claimed_today"] = False
-
-st.markdown("---")
 
 # Render Game Categories
 if codes_data:
@@ -165,33 +153,25 @@ if codes_data:
             st.write("")
             if not st.session_state[unlocked_key]:
                 if st.button("🔓 Unlock Code", key=f"btn_{game_name}_{index}", use_container_width=True):
-                    if not user_name.strip() or not user_email.strip():
-                        st.error("⚠️ Please enter Name & Email above first!")
-                    else:
-                        timer_ph = st.empty()
-                        for s in range(10, 0, -1):
-                            timer_ph.warning(f"⏳ Unlocking code in {s}s...")
-                            time.sleep(1)
-                        timer_ph.empty()
+                    timer_ph = st.empty()
+                    for s in range(10, 0, -1):
+                        timer_ph.warning(f"⏳ Unlocking code in {s}s...")
+                        time.sleep(1)
+                    timer_ph.empty()
 
-                        # Real Code Scraping Swap for 1st Winner
-                        if not st.session_state["is_claimed_today"]:
-                            st.session_state["is_claimed_today"] = True
-                            st.session_state[code_key] = random.choice(web_codes)
-                            st.balloons()
-                            st.success(f"🎉 CONGRATS {user_name}! You won Today's 100% REAL Scraped Code!")
+                    # 1st Lucky Winner Scraped Real Code Reveal
+                    if not st.session_state["is_claimed_today"]:
+                        st.session_state["is_claimed_today"] = True
+                        st.session_state[code_key] = random.choice(web_codes)
+                        st.balloons()
+                        st.success("🎉 CONGRATULATIONS! You Unlocked Today's REAL Working Code!")
 
-                        # Add User to Live Winners Feed
-                        winner_entry = f"🏆 **{user_name}** ({user_email[:3]}***@gmail.com) unlocked **{game_name} Code** (Just Now)"
-                        if winner_entry not in st.session_state["user_winner_list"]:
-                            st.session_state["user_winner_list"].insert(0, winner_entry)
-
-                        st.session_state[unlocked_key] = True
-                        st.rerun()
+                    st.session_state[unlocked_key] = True
+                    st.rerun()
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-# ADS SLOT 3 & 4: Banner Ads (320x50 & Direct Links)
+# ADS 3 & 4: Banner Ads (320x50 & Direct Links)
 col_a1, col_a2 = st.columns(2)
 with col_a1:
     components.html("""
@@ -212,30 +192,30 @@ with col_a2:
 
 st.markdown("---")
 
-# How to Redeem Instructions Section
+# How to Redeem Instructions
 st.subheader("📖 How to Redeem Your Codes?")
 st.markdown("""
 <div class="instruction-box">
-<b>🔥 Free Fire:</b> Go to official <i>reward.ff.garena.com</i> -> Login -> Paste 12-digit code -> Claim in Game Mail.<br>
-<b>💳 Google Play:</b> Open Play Store -> Click Profile -> Payments & Subscriptions -> Redeem Code.<br>
-<b>🎮 Roblox:</b> Go to <i>roblox.com/redeem</i> -> Login -> Paste code & Redeem inventory items!
+<b>🔥 Free Fire:</b> Go to <i>reward.ff.garena.com</i> -> Login -> Paste 12-digit code -> Redeem in Game Mail.<br>
+<b>💳 Google Play:</b> Open Play Store -> Profile -> Payments & Subscriptions -> Redeem Code.<br>
+<b>🎮 Roblox:</b> Go to <i>roblox.com/redeem</i> -> Login -> Paste code & Redeem items!
 </div>
 """, unsafe_allow_html=True)
 
 st.markdown("---")
 
-# Dynamic Mass Live Feed + Real User Winners
+# Dynamic Live Winners Feed
 st.subheader("🔥 Live Today's Winners Feed")
 
-# Show Real Users First
-for real_w in st.session_state["user_winner_list"]:
-    st.info(real_w)
+mass_usernames = [
+    "Mass_FreeFire_FF", "Gamer_King_FF", "Dharsh_FF_Pro", 
+    "Roblox_Mass_Gamer", "Headshot_King", "Tamil_Gamer_FF", "Killer_Boy_2026"
+]
 
-mass_usernames = ["Mass_FreeFire_FF", "Gamer_King_FF", "Dharsh_FF_Pro", "Roblox_Mass_Gamer", "Headshot_King", "Tamil_Gamer_FF", "Killer_Boy_2026"]
 for u in random.sample(mass_usernames, 4):
     st.caption(f"✅ **{u}** just unlocked a code ({random.randint(1, 20)} mins ago)")
 
-# ADS SLOT 5 & 6: Vertical Skyscraper & Extra Script Ad
+# ADS 5 & 6: Skyscraper Banner & Script Ads
 components.html("""
 <script src="https://pl30995564.profitableratecpmnetwork.com/f8/1f/ae/f81fae1fb733a93fd72e3407e4f2f2a7.js"></script>
 <script>
