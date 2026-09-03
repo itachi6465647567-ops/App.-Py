@@ -58,9 +58,9 @@ if 'hacked_companies' not in st.session_state:
     st.session_state.hacked_companies = []
 
 if 'terminal_logs' not in st.session_state:
-    st.session_state.terminal_logs = f"INITIALIZING GAME ZONE 360...\nIP: {st.session_state.user_ip} | AGENT: {st.session_state.agent_name}\nREADY FOR 600-LEVEL MAINFRAME PENETRATION...\n"
+    st.session_state.terminal_logs = f"INITIALIZING GAME ZONE 360...\nIP: {st.session_state.user_ip} | AGENT: {st.session_state.agent_name}\nREADY FOR MAINFRAME PENETRATION...\n"
 
-# 2. EXACTLY 60 Target Companies List for Every 10 Keystroke Milestones (60 * 10 = 600)
+# 2. EXACTLY 60 Target Companies List for Every 10 Keystroke Milestones
 TARGET_COMPANIES_60 = [
     "NASA Space Telemetry Subnet", "Pentagon Defense Mainframe", "Google Core Cloud Server", 
     "SpaceX Satellite Orbital Gateway", "Interpol Global Criminal Database", "Amazon Web Services (AWS) US-East", 
@@ -80,7 +80,7 @@ TARGET_COMPANIES_60 = [
     "Skynet Global Defense Network", "Matrix Central Core Terminal"
 ]
 
-# 3. User Provided Massive 600 Hacker Lines Pool
+# 3. Clean Hacker Lines Pool (No Numbers like [1/600] attached)
 RAW_BASE_POOL = [
     "INITIATING ROOT ACCESS PROTOCOL v4.9.2...",
     "BYPASSING FIREWALL [████████████████] 100% SECURE",
@@ -128,14 +128,14 @@ if 'master_600_pool' not in st.session_state:
     full_pool = []
     for i in range(1, 601):
         base_line = RAW_BASE_POOL[(i - 1) % len(RAW_BASE_POOL)]
-        full_pool.append(f"[{i}/600] {base_line}")
+        full_pool.append(base_line)  # Pure text without numbering
     st.session_state.master_600_pool = full_pool
 
 # Layout: Main Terminal & Leaderboard Sidebar
 col1, col2 = st.columns([2, 1])
 
 with col1:
-    st.markdown("<h1>💻 GAME ZONE 360 : 600-LEVEL TERMINAL</h1>", unsafe_allow_html=True)
+    st.markdown("<h1>💻 GAME ZONE 360 : ELITE TERMINAL</h1>", unsafe_allow_html=True)
     st.markdown(f"<p style='color: #8b949e;'>IP: <b style='color: #00ff66;'>{st.session_state.user_ip}</b> | Agent: <b style='color: #00ff66;'>{st.session_state.agent_name}</b></p>", unsafe_allow_html=True)
 
     # Keyboard Input Box
@@ -146,13 +146,13 @@ with col1:
             st.session_state.total_strokes += 1
             current_idx = st.session_state.total_strokes - 1
             
-            # Check for every 10 keystrokes -> Company Hack Milestone (Mapped to 60 Companies)
+            # Check for every 10 keystrokes -> Company Hack Milestone
             if st.session_state.total_strokes % 10 == 0:
                 company_index = (st.session_state.total_strokes // 10 - 1) % len(TARGET_COMPANIES_60)
                 target_comp = TARGET_COMPANIES_60[company_index]
                 if target_comp not in st.session_state.hacked_companies:
                     st.session_state.hacked_companies.append(target_comp)
-                log_msg = f"\n🔥 [MILESTONE {st.session_state.total_strokes}/600] COMPROMISED COMPANY: {target_comp}!\n"
+                log_msg = f"\n🔥 [MILESTONE REACHED] COMPROMISED COMPANY: {target_comp}!\n"
             
             if st.session_state.total_strokes == 600:
                 log_msg = "\n👑 [ULTIMATE BOSS OVERRIDE] 600/600 COMPLETED! ALL 60 GLOBAL MAINFRAMES SEIZED!\n"
@@ -172,7 +172,7 @@ with col1:
     if st.button("🧹 Purge Terminal Buffer"):
         st.session_state.total_strokes = 0
         st.session_state.hacked_companies = []
-        st.session_state.terminal_logs = f"BUFFER CLEARED. IP: {st.session_state.user_ip} READY FOR 600 LEVELS_\n"
+        st.session_state.terminal_logs = f"BUFFER CLEARED. IP: {st.session_state.user_ip} READY_\n"
         st.rerun()
 
 with col2:
@@ -197,7 +197,7 @@ with col2:
     if st.session_state.hacked_companies:
         comp_list_str = "<br>".join([f"✅ {comp}" for comp in st.session_state.hacked_companies])
         st.markdown(f"""
-            <div style="background-color: #0a0f0d; border: 1px solid #30363d; padding: 10px; border-radius: 8px; color: #00ff66; font-size: 12px; max-height: 200px; overflow-y: auto;">
+            <div style="background-color: #0a0f0d; border: 1px solid #30363d; padding: 10px; border-radius: 8px; color: #00ff66; font-size: 12px; max-height: 180px; overflow-y: auto;">
                 {comp_list_str}
             </div>
         """, unsafe_allow_html=True)
@@ -207,27 +207,66 @@ with col2:
     st.markdown("<br>")
     
     # ==========================================
-    # 📢 ADSTERRA MONETIZATION INTEGRATION
+    # 📢 ALL 7 ADSTERRA AD CODES INTEGRATION
     # ==========================================
-    st.markdown("### 📢 Sponsored Network")
-    
+    st.markdown("### 📢 Sponsored Networks")
+
+    # Ad 1 & 2: External Scripts (Loaded safely)
     st.markdown("""
-        <div style="background: #0a0f0d; border: 1px dashed #30363d; padding: 10px; border-radius: 6px; text-align: center;">
+        <script src="https://pl31170257.profitableratecpmnetwork.com/13/dd/04/13dd04bed2b3a264e2b5c0bee6e12f6d.js"></script>
+        <script async="async" data-cfasync="false" src="https://pl31170258.profitableratecpmnetwork.com/a80ef66a08d7b5463f5dd57e37a8b51c/invoke.js"></script>
+        <div id="container-a80ef66a08d7b5463f5dd57e37a8b51c"></div>
+    """, unsafe_allow_html=True)
+
+    # Ad 3: High Revenue 728x90 Banner
+    st.markdown("""
+        <div style="background: #0a0f0d; border: 1px dashed #30363d; padding: 5px; border-radius: 6px; text-align: center; margin-bottom: 10px;">
             <script type="text/javascript">
-                atOptions = {
-                    'key' : '61efa07c5904f7f5af5629ad15d68ece',
-                    'format' : 'iframe',
-                    'height' : 60,
-                    'width' : 468,
-                    'params' : {}
-                };
+              atOptions = {
+                'key' : 'b5932006bbff90b58bbcc67682e8be52',
+                'format' : 'iframe',
+                'height' : 90,
+                'width' : 728,
+                'params' : {}
+              };
+            </script>
+            <script type="text/javascript" src="https://www.highrevenueformat.com/b5932006bbff90b58bbcc67682e8be52/invoke.js"></script>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Ad 4: Profitable Rate CPM Script
+    st.markdown("""
+        <script src="https://pl31170260.profitableratecpmnetwork.com/5e/57/d7/5e57d73e548507aa283de942881b1c82.js"></script>
+    """, unsafe_allow_html=True)
+
+    # Ad 5: High Revenue 468x60 Banner
+    st.markdown("""
+        <div style="background: #0a0f0d; border: 1px dashed #30363d; padding: 5px; border-radius: 6px; text-align: center; margin-bottom: 10px;">
+            <script type="text/javascript">
+              atOptions = {
+                'key' : '61efa07c5904f7f5af5629ad15d68ece',
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+              };
             </script>
             <script type="text/javascript" src="https://www.highrevenueformat.com/61efa07c5904f7f5af5629ad15d68ece/invoke.js"></script>
         </div>
     """, unsafe_allow_html=True)
 
-# Additional Adsterra global script embeds
-st.markdown("""
-    <script src="https://pl31170257.profitableratecpmnetwork.com/13/dd/04/13dd04bed2b3a264e2b5c0bee6e12f6d.js"></script>
-    <script async="async" data-cfasync="false" src="https://pl31170258.profitableratecpmnetwork.com/a80ef66a08d7b5463f5dd57e37a8b51c/invoke.js"></script>
-""", unsafe_allow_html=True)
+    # Ad 6: High Revenue 160x300 Skyscraper
+    st.markdown("""
+        <div style="background: #0a0f0d; border: 1px dashed #30363d; padding: 5px; border-radius: 6px; text-align: center;">
+            <script type="text/javascript">
+              atOptions = {
+                'key' : 'cfd522d9f8386edf91201aab264b4696',
+                'format' : 'iframe',
+                'height' : 300,
+                'width' : 160,
+                'params' : {}
+              };
+            </script>
+            <script type="text/javascript" src="https://www.highrevenueformat.com/cfd522d9f8386edf91201aab264b4696/invoke.js"></script>
+        </div>
+    """, unsafe_allow_html=True)
